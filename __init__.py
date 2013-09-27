@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-#
+##
 ## This file is part of Invenio.
-## Copyright (C) 2012 CERN.
+## Copyright (C) 2013 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -15,27 +15,4 @@
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02D111-1307, USA.
-
-"""
-SeqUtils database models.
-"""
-
-# General imports.
-from invenio.ext.sqlalchemy import db
-
-# Create your models here.
-
-class SeqSTORE(db.Model):
-    """Represents a SeqSTORE record."""
-    __tablename__ = 'seqSTORE'
-
-    id = db.Column(db.Integer(8), primary_key=True, nullable=False)
-    seq_name = db.Column(db.String(15))
-    seq_value = db.Column(db.String(20))
-
-    __table_args__ = (db.Index('seq_name_value', seq_name, seq_value,
-                               unique=True),
-                      db.Model.__table_args__)
-
-__all__ = ['SeqSTORE']
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
