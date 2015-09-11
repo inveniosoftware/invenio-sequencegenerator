@@ -103,6 +103,11 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
+    entry_points={
+        'console_scripts': [
+            'bibtex = invenio_sequencegenerator.scripts.bibtex:main',
+        ],
+    },
     install_requires=requirements,
     extras_require={
         'docs': [
