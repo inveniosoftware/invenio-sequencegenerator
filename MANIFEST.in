@@ -1,0 +1,20 @@
+include *.cfg
+include *.py
+include *.rst
+include *.txt
+include *.yml
+include .dockerignore .editorconfig
+include .travis.invenio.cfg
+include LICENSE
+include babel.ini
+include pytest.ini
+include tox.ini
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+recursive-include invenio_sequencegenerator *.mo
+recursive-include invenio_sequencegenerator *.po
+recursive-include invenio_sequencegenerator *.pot
+recursive-include invenio_sequencegenerator *.py
+recursive-include tests *.py
