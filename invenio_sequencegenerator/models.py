@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2012, 2014 CERN.
+# Copyright (C) 2012, 2014, 2015 CERN.
 #
 # Invenio is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -21,7 +21,7 @@
 SeqUtils database models.
 """
 
-from invenio.ext.sqlalchemy import db
+from invenio_ext.sqlalchemy import db
 
 
 class SeqSTORE(db.Model):
