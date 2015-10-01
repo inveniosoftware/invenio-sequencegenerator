@@ -38,6 +38,7 @@ requirements = [
     'six>=1.7.2',
     'Invenio>=2.0.3',
     'invenio-ext>=0.1.0',
+    'invenio-upgrader>=0.1.2',
 ]
 
 test_requirements = [
