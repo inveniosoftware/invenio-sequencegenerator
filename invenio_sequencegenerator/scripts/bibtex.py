@@ -17,11 +17,9 @@
 # along with Invenio; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-"""
-Texkey: Look for records without a texkey and generate one
-"""
+"""Texkey: Look for records without a texkey and generate one."""
 
-from invenio.base.factory import with_app_context
+from invenio_base.factory import with_app_context
 
 
 @with_app_context()
