@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio Demosite.
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 CERN.
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2015 CERN.
 #
 # Invenio Demosite is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -21,7 +21,7 @@
 
 from mock import patch
 
-from invenio.testsuite import InvenioTestCase
+from invenio_testing import InvenioTestCase
 
 from invenio_sequencegenerator.backend import SequenceGenerator
 
@@ -29,14 +29,14 @@ from invenio_sequencegenerator.backend import SequenceGenerator
 def get_bibrecord_mock(_):
     return {'001': [([], ' ', ' ', '1086086', 1)],
             '111': [([('a',
-            'Mock conference'),
-            ('d', '14-16 Sep 2011'),
-            ('x', '2050-09-14'),
-            ('c', 'xxxxx')],
-            ' ',
-            ' ',
-            '',
-            3)],
+                       'Mock conference'),
+                      ('d', '14-16 Sep 2011'),
+                      ('x', '2050-09-14'),
+                      ('c', 'xxxxx')],
+                     ' ',
+                     ' ',
+                     '',
+                     3)],
             '270': [([('m', 'dummy@dummy.com')], ' ', ' ', '', 5)],
             '856': [([('u', 'http://dummy.com/')], '4', ' ', '', 6)],
             '970': [([('a', 'CONF-XXXXXX')], ' ', ' ', '', 2)],
@@ -72,7 +72,7 @@ class TestIntSequenceGeneratorClass(InvenioTestCase):
 class TestCnumSequenceGeneratorClass(InvenioTestCase):
 
     @patch('invenio.legacy.bibedit.utils.get_bibrecord',
-        get_bibrecord_mock)
+           get_bibrecord_mock)
     def test_get_next_cnum(self):
         from invenio_sequencegenerator.cnum import CnumSeq
         from invenio_sequencegenerator.models import SeqSTORE
