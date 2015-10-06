@@ -19,10 +19,11 @@
 
 """sequencegenerator backend."""
 
-from invenio.legacy.dbquery import run_sql
+from invenio_ext.sqlalchemy import db
 
 from sqlalchemy.exc import IntegrityError
 
+from .models import SeqSTORE
 
 # Number of retries to insert a value in the DB storage
 MAX_DB_RETRY = 10
@@ -47,9 +48,8 @@ class SequenceGenerator(object):
         :return: result of select SQL query
         :rtype: tuple
         """
-        return run_sql("""SELECT seq_value FROM "seqSTORE"
-                       WHERE seq_value=%s AND seq_name=%s""",
-                       (value, self.seq_name))
+        return SeqSTORE.query.filter_by(seq_value=value,
+                                        seq_name=self.seq_name).all()
 
     def _insert_value(self, value):
         """Insert value into storage.
@@ -60,9 +60,12 @@ class SequenceGenerator(object):
         :return: result of insert SQL query
         :rtype: tuple
         """
-        run_sql("""INSERT INTO "seqSTORE" (seq_name, seq_value)
-                VALUES (%s, %s)""",
-                (self.seq_name, value))
+        with db.session.begin_nested():
+            seq = SeqSTORE()
+            seq.seq_name = self.seq_name
+            seq.seq_value = value
+            db.session.add(seq)
+        db.session.commit()
 
     def _next_value(self, *args, **kwargs):
         """Internal implementation to calculate next value in sequence."""
