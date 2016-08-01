@@ -22,7 +22,13 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-[pytest]
-addopts = --pep8 --ignore=docs --cov=invenio_sequencegenerator --cov-report=term-missing
-pep8ignore =
-    tests/* ALL
+
+"""Test version."""
+
+from __future__ import absolute_import, print_function
+
+
+def test_version(db):
+    """Test version import."""
+    from invenio_sequencegenerator import __version__
+    assert __version__

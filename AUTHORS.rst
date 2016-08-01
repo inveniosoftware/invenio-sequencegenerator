@@ -1,6 +1,6 @@
 ..
     This file is part of Invenio.
-    Copyright (C) 2015 CERN.
+    Copyright (C) 2015, 2016 CERN.
 
     Invenio is free software; you can redistribute it
     and/or modify it under the terms of the GNU General Public License as
@@ -31,5 +31,6 @@ Invenio module for generating sequences.
 - Jiri Kuncar <jiri.kuncar@cern.ch>
 - Lars Holm Nielsen <lars.holm.nielsen@cern.ch>
 - Leonardo Rossi <leonardo.r@cern.ch>
+- Orestis Melkonian <melkon.or@gmail.com>
 - Samuele Kaplun <samuele.kaplun@cern.ch>
 - Tibor Simko <tibor.simko@cern.ch>
