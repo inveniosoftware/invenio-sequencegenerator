@@ -34,7 +34,7 @@ history = open('CHANGES.rst').read()
 tests_require = [
     'check-manifest>=0.25',
     'coverage>=4.0',
-    'isort>=4.2.2',
+    'isort>=4.2.3',
     'pydocstyle>=1.0.0',
     'pytest-cache>=1.0',
     'pytest-cov>=1.8.0',
@@ -102,6 +102,10 @@ setup(
     entry_points={
         'invenio_i18n.translations': [
             'messages = invenio_sequencegenerator',
+        ],
+        'invenio_db.models': [
+            'invenio_sequencegenerator = '
+            'invenio_sequencegenerator.models',
         ],
     },
     extras_require=extras_require,
