@@ -35,6 +35,7 @@ import pytest
 from flask import Flask
 from invenio_db import db as db_
 from invenio_db import InvenioDB
+from invenio_sequencegenerator.ext import InvenioSequenceGenerator
 from sqlalchemy_utils.functions import create_database, database_exists
 
 
@@ -55,6 +56,7 @@ def app(request):
         from flask_cli import FlaskCLI
         FlaskCLI(app)
     InvenioDB(app)
+    InvenioSequenceGenerator(app)
 
     with app.app_context():
         yield app

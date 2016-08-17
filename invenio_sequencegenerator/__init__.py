@@ -80,6 +80,11 @@ Then initialise the Invenio-DB extension:
 >>> from invenio_db import InvenioDB
 >>> ext_db = InvenioDB(app)
 
+Also, initialise the Invenio-SequenceGenerator extension:
+
+>>> from invenio_sequencegenerator.ext import InvenioSequenceGenerator
+>>> ext_seq = InvenioSequenceGenerator(app)
+
 In order for the following examples to work, you need to work within an
 Flask application context so let's push one:
 

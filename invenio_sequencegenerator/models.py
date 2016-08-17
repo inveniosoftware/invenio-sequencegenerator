@@ -101,7 +101,8 @@ def derive_parent(target, value, oldvalue, initiator):
             TemplateDefinition.name.in_(placeholders)
         ).one_or_none() if placeholders else None
     except MultipleResultsFound:
-        raise InvalidTemplate('More than 1 parents in template')
+        raise InvalidTemplate('More than 1 parents '
+                              'in template "{0}".'.format(value))
 
     target.parent = parent
 

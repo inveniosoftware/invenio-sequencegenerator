@@ -55,6 +55,9 @@ extras_require = {
     'sqlite': [
         'invenio-db[versioning]>=1.0.0a10',
     ],
+    'admin': [
+        'Flask-Admin>=1.4.2',
+    ],
     'tests': tests_require,
 }
 
@@ -100,12 +103,26 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'invenio_base.apps': [
+            'invenio_sequencegenerator = '
+            'invenio_sequencegenerator:InvenioSequenceGenerator',
+        ],
+        'invenio_base.blueprints': [
+            'invenio_sequencegenerator = '
+            'invenio_sequencegenerator.ext:blueprint',
+        ],
         'invenio_i18n.translations': [
             'messages = invenio_sequencegenerator',
         ],
         'invenio_db.models': [
             'invenio_sequencegenerator = '
             'invenio_sequencegenerator.models',
+        ],
+        'invenio_admin.views': [
+            'invenio_sequencegenerator_templatedefinition = '
+            'invenio_sequencegenerator.admin:templatedefinition_adminview',
+            'invenio_sequencegenerator_counter = '
+            'invenio_sequencegenerator.admin:counter_adminview',
         ],
     },
     extras_require=extras_require,
