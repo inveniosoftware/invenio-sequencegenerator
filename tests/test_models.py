@@ -242,3 +242,19 @@ def test_regex():
 def test_py3_next(db):
     """Test PY3 __next__."""
     assert Sequence(Template.create('PY3', '{counter}')).__next__() == '0'
+
+
+def test_repr(db):
+    """Test __repr__."""
+    template = Template.create('A', '{counter}')
+    assert repr(template.model) == (
+        "TemplateDefinition(name='A', "
+        "meta_template='{counter}', start=0, step=1)"
+    )
+    sequence = Sequence(template)
+    assert repr(sequence.counter) == (
+        "Counter(template_instance='{counter}', "
+        "definition_name='A', counter=0, template_definition="
+        "TemplateDefinition(name='A', meta_template='{counter}', "
+        "start=0, step=1))"
+    )

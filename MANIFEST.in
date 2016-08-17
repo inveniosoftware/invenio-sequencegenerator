@@ -41,6 +41,8 @@ recursive-include docs *.bat
 recursive-include docs *.py
 recursive-include docs *.rst
 recursive-include docs Makefile
+recursive-include examples *.py
+recursive-include invenio_sequencegenerator *.html
 recursive-include invenio_sequencegenerator *.mo
 recursive-include invenio_sequencegenerator *.po
 recursive-include invenio_sequencegenerator *.pot

@@ -22,7 +22,7 @@
 import re
 
 from invenio_db import db
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.event import listen
 from sqlalchemy.orm import validates
 from sqlalchemy.orm.exc import MultipleResultsFound
 
@@ -41,7 +41,7 @@ class TemplateDefinition(db.Model, object):
     name = db.Column(db.String(255), primary_key=True)
     """The identifier of the template definition."""
 
-    _meta_template = db.Column('meta_template', db.String(255), unique=True)
+    meta_template = db.Column(db.String(255), unique=True)
     """The template generator."""
 
     parent_name = db.Column(db.ForeignKey(name))
@@ -58,42 +58,21 @@ class TemplateDefinition(db.Model, object):
         backref=db.backref('parent', remote_side=name)
     )
 
-    @validates('_meta_template')
+    @validates('meta_template')
     def validate_meta_template(self, key, value):
         """Validate template string of template definition."""
         if not self.COUNTER_REGEX.search(value):
             raise InvalidTemplate('No counter placeholder')
-        value = double_counter(value, self.COUNTER_REGEX)
         return value
-
-    @hybrid_property
-    def meta_template(self):
-        """The template string of the template definition."""
-        return self._meta_template
-
-    @meta_template.setter
-    def meta_template(self, meta_template):
-        """Automatically derive parent from template string."""
-        placeholders = extract_placeholders(meta_template)
-
-        # Check if parent sequence exists
-        try:
-            parent = TemplateDefinition.query.filter(
-                TemplateDefinition.name.in_(placeholders)
-            ).one_or_none() if placeholders else None
-        except MultipleResultsFound:
-            raise InvalidTemplate('More than 1 parents in template')
-
-        self.parent = parent
-        self._meta_template = meta_template
 
     def counter(self, **kwargs):
         """Get counter of this template definition, based on given kwargs."""
-        counter = Counter.get(self.meta_template, kwargs)
+        meta_template = double_counter(self.meta_template, self.COUNTER_REGEX)
+        counter = Counter.get(meta_template, kwargs)
         if counter is None:
             with db.session.begin_nested():
                 counter = Counter.create(
-                    meta_template=self.meta_template,
+                    meta_template=meta_template,
                     ctx=kwargs,
                     counter=self.start,
                     template_definition=self,
@@ -101,6 +80,33 @@ class TemplateDefinition(db.Model, object):
                 db.session.add(counter)
 
         return counter
+
+    def __repr__(self):
+        """Canonical representation of ``TemplateDefinition``."""
+        return ('TemplateDefinition('
+                'name={0.name!r}, '
+                'meta_template={0.meta_template!r}, '
+                'start={0.start!r}, '
+                'step={0.step!r})'
+                ).format(self)
+
+
+def derive_parent(target, value, oldvalue, initiator):
+    """Automatically derive parent from template string."""
+    placeholders = extract_placeholders(value)
+
+    # Check if parent sequence exists
+    try:
+        parent = TemplateDefinition.query.filter(
+            TemplateDefinition.name.in_(placeholders)
+        ).one_or_none() if placeholders else None
+    except MultipleResultsFound:
+        raise InvalidTemplate('More than 1 parents in template')
+
+    target.parent = parent
+
+
+listen(TemplateDefinition.meta_template, 'set', derive_parent)
 
 
 class Counter(db.Model):
@@ -160,3 +166,12 @@ class Counter(db.Model):
                     raise InvalidResetCall()
 
             self.counter = start
+
+    def __repr__(self):
+        """Canonical representation of ``Counter``."""
+        return ('Counter('
+                'template_instance={0.template_instance!r}, '
+                'definition_name={0.definition_name!r}, '
+                'counter={0.counter!r}, '
+                'template_definition={0.template_definition!r})'
+                ).format(self)
