@@ -44,7 +44,6 @@ import os
 from flask import Flask
 from flask_admin import Admin
 from flask_babelex import Babel
-from flask_cli import FlaskCLI
 from invenio_db import InvenioDB, db
 from invenio_sequencegenerator.admin import counter_adminview as ca
 from invenio_sequencegenerator.admin import templatedefinition_adminview as ta
@@ -61,7 +60,6 @@ app.config.update(
         'SQLALCHEMY_DATABASE_URI', 'sqlite:///test.db'),
     SQLALCHEMY_TRACK_MODIFICATIONS=True,
 )
-FlaskCLI(app)
 Babel(app)
 InvenioDB(app)
 InvenioSequenceGenerator(app)
@@ -92,6 +90,7 @@ def sequences():
 
 @app.route('/')
 def index():
+    """Simple home page."""
     return '<a href="/admin/">Click me to get to Admin!</a>'
 
 

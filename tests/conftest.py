@@ -52,9 +52,6 @@ def app(request):
         SQLALCHEMY_TRACK_MODIFICATIONS=True,
         TESTING=True,
     )
-    if not hasattr(app, 'cli'):
-        from flask_cli import FlaskCLI
-        FlaskCLI(app)
     InvenioDB(app)
     InvenioSequenceGenerator(app)
 

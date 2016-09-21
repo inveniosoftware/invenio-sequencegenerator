@@ -47,13 +47,13 @@ extras_require = {
         'Sphinx>=1.4.2',
     ],
     'mysql': [
-        'invenio-db[mysql,versioning]>=1.0.0a10',
+        'invenio-db[mysql,versioning]>=1.0.0b1',
     ],
     'postgresql': [
-        'invenio-db[postgresql,versioning]>=1.0.0a10',
+        'invenio-db[postgresql,versioning]>=1.0.0b1',
     ],
     'sqlite': [
-        'invenio-db[versioning]>=1.0.0a10',
+        'invenio-db[versioning]>=1.0.0b1',
     ],
     'admin': [
         'Flask-Admin>=1.4.2',
