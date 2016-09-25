@@ -46,4 +46,4 @@ Invenio module for generating sequences.
 *This is an experimental developer preview release.*
 
 * Free software: GPLv2 license
-* Documentation: https://invenio-sequencegenerator.readthedocs.org.
+* Documentation: https://invenio-sequencegenerator.readthedocs.io.

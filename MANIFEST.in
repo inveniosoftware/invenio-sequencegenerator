@@ -35,6 +35,7 @@ prune docs/_build
 
 include LICENSE
 include babel.ini
+include docs/requirements.txt
 include pytest.ini
 include tox.ini
 recursive-include docs *.bat

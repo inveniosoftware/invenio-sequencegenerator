@@ -24,7 +24,7 @@ Installation
 Documentation
 -------------
 
-   http://invenio-sequencegenerator.readthedocs.org/en/v0.1.0
+   http://invenio-sequencegenerator.readthedocs.io/en/v0.1.0
 
 Happy hacking and thanks for flying Invenio-SequenceGenerator.
 
