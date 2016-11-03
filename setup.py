@@ -107,10 +107,6 @@ setup(
             'invenio_sequencegenerator = '
             'invenio_sequencegenerator:InvenioSequenceGenerator',
         ],
-        'invenio_base.blueprints': [
-            'invenio_sequencegenerator = '
-            'invenio_sequencegenerator.ext:blueprint',
-        ],
         'invenio_i18n.translations': [
             'messages = invenio_sequencegenerator',
         ],
