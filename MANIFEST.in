@@ -30,6 +30,7 @@ include *.txt
 include *.yml
 include .dockerignore
 include .editorconfig
+include .lgtm MAINTAINERS
 include .tx/config
 prune docs/_build
 
