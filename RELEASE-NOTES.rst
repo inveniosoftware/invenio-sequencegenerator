@@ -1,8 +1,8 @@
-==================================
- Invenio-SequenceGenerator v0.1.0
-==================================
+====================================
+ Invenio-SequenceGenerator v1.0.0a1
+====================================
 
-Invenio-SequenceGenerator v0.1.0 was released on TBD, 2015.
+Invenio-SequenceGenerator v1.0.0a1 was released on January 16, 2017.
 
 About
 -----
@@ -19,12 +19,12 @@ What's new
 Installation
 ------------
 
-   $ pip install invenio-sequencegenerator==0.1.0
+   $ pip install invenio-sequencegenerator==1.0.0a1
 
 Documentation
 -------------
 
-   http://invenio-sequencegenerator.readthedocs.io/en/v0.1.0
+   http://invenio-sequencegenerator.readthedocs.io/en/v1.0.0a1
 
 Happy hacking and thanks for flying Invenio-SequenceGenerator.
 
