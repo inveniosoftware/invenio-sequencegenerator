@@ -222,6 +222,54 @@ specific playlist, all at once:
 '2016: Playlist 2 > Audio File 05', '2016: Playlist 2 > Audio File 06',
 '2016: Playlist 2 > Audio File 07']
 
+Command-line interface
+----------------------
+It is possible to use the command-line interface, instead of using the API
+directly. As you would expect, one can define new templates and get new
+identifiers from sequences.
+
+To get started, we need to first setup the example app:
+
+.. code-block:: console
+
+    $ cd examples
+    $ export FLASK_APP=app.py
+    $ flask db init
+    $ flask db create
+
+Let's see the example introduced in :ref:`Simple counters`, using the CLI this
+time:
+
+.. code-block:: console
+
+    $ flask sequences create ID '{counter}-file'
+    $ flask sequences next ID
+    0-file
+    $ flask sequences next ID
+    1-file
+    $ flask sequences next ID
+    2-file
+
+Now let's see a more complicated example, such as the one shown in
+:ref:`Hierarchical identifiers`:
+
+.. code-block:: console
+
+    $ flask sequences create PL '{year}: Playlist {counter}' --start 1
+    $ flask sequences create FL '{PL} > Audio File {counter:02d}' --start 1
+    $ flask sequences next PL year=2015
+    2015: Playlist 1
+    $ flask sequences next PL year=2015
+    2015: Playlist 2
+    $ flask sequences next PL year=2016
+    2016: Playlist 1
+    $ flask sequences next FL PL='2015: Playlist 2'
+    2015: Playlist 2 > Audio File 01
+    $ flask sequences next FL PL='2015: Playlist 2'
+    2015: Playlist 2 > Audio File 02
+    $ flask sequences next FL PL='2016: Playlist 1'
+    2016: Playlist 1 > Audio File 01
+
 """
 
 from __future__ import absolute_import, print_function

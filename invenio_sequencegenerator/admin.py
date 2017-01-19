@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2016 CERN.
+# Copyright (C) 2016, 2017 CERN.
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -24,9 +24,8 @@
 
 """Admin views for invenio-accounts."""
 
-from flask import flash, redirect, request, url_for
+from flask import redirect, request, url_for
 from flask_admin import expose
-from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 from flask_babelex import gettext as _
 from invenio_db import db

@@ -103,6 +103,9 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'flask.commands': [
+            'sequences = invenio_sequencegenerator.cli:sequences',
+        ],
         'invenio_base.apps': [
             'invenio_sequencegenerator = '
             'invenio_sequencegenerator:InvenioSequenceGenerator',

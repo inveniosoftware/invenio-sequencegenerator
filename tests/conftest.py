@@ -33,6 +33,7 @@ import tempfile
 
 import pytest
 from flask import Flask
+from flask.cli import ScriptInfo
 from invenio_db import db as db_
 from invenio_db import InvenioDB
 from invenio_sequencegenerator.ext import InvenioSequenceGenerator
@@ -70,3 +71,10 @@ def db(app):
     yield db_
     db_.session.remove()
     db_.drop_all()
+
+
+@pytest.yield_fixture()
+def script_info(db, app):
+    """Get ScriptInfo object for testing CLI."""
+    with app.app_context():
+        yield ScriptInfo(create_app=lambda info: app)
