@@ -30,7 +30,6 @@ from __future__ import absolute_import, print_function
 from itertools import islice
 
 import pytest
-
 from invenio_sequencegenerator.api import Sequence, Template
 from invenio_sequencegenerator.errors import InvalidResetCall, \
     InvalidTemplate, SequenceNotFound

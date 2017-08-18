@@ -28,7 +28,6 @@ from __future__ import absolute_import, print_function
 
 import click
 from flask.cli import with_appcontext
-
 from invenio_db import db
 from invenio_sequencegenerator.api import Sequence, Template
 

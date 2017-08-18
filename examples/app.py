@@ -48,7 +48,6 @@ from invenio_db import InvenioDB, db
 from invenio_sequencegenerator.admin import counter_adminview as ca
 from invenio_sequencegenerator.admin import templatedefinition_adminview as ta
 from invenio_sequencegenerator.api import Sequence, Template
-
 # Create Flask application
 from invenio_sequencegenerator.ext import InvenioSequenceGenerator
 
