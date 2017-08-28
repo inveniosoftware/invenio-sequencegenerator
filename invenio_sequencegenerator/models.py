@@ -44,7 +44,8 @@ class TemplateDefinition(db.Model, object):
     meta_template = db.Column(db.String(255), unique=True)
     """The template generator."""
 
-    parent_name = db.Column(db.ForeignKey(name))
+    parent_name = db.Column(db.ForeignKey(
+        name, name='fk_seqgen_template_parent_name_seqgen_template'))
     """Indicate that the template depends on another one."""
 
     start = db.Column(db.Integer, default=0)
@@ -119,7 +120,10 @@ class Counter(db.Model):
                                   primary_key=True, index=True)
     """The template string to use."""
 
-    definition_name = db.Column(db.ForeignKey(TemplateDefinition.name))
+    definition_name = db.Column(
+        db.ForeignKey(TemplateDefinition.name,
+                      name='fk_seqgen_counter_definition_name_seqgen_template')
+    )
     """Link to the template definition."""
 
     counter = db.Column(db.Integer, nullable=False)
