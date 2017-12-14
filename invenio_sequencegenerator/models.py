@@ -2,6 +2,9 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016 CERN.
+# Copyright (C) 2017 Swiss Data Science Center (SDSC)
+# A partnership between École Polytechnique Fédérale de Lausanne (EPFL) and
+# Eidgenössische Technische Hochschule Zürich (ETHZ).
 #
 # Invenio is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -22,6 +25,7 @@
 import re
 
 from invenio_db import db
+from sqlalchemy import UniqueConstraint
 from sqlalchemy.event import listen
 from sqlalchemy.orm import validates
 from sqlalchemy.orm.exc import MultipleResultsFound
@@ -41,7 +45,7 @@ class TemplateDefinition(db.Model, object):
     name = db.Column(db.String(255), primary_key=True)
     """The identifier of the template definition."""
 
-    meta_template = db.Column(db.String(255), unique=True)
+    meta_template = db.Column(db.String(255))
     """The template generator."""
 
     parent_name = db.Column(db.ForeignKey(
@@ -59,6 +63,10 @@ class TemplateDefinition(db.Model, object):
         backref=db.backref('parent', remote_side=name)
     )
 
+    __table_args__ = (
+        UniqueConstraint('name', 'meta_template'),
+    )
+
     @validates('meta_template')
     def validate_meta_template(self, key, value):
         """Validate template string of template definition."""
@@ -69,7 +77,7 @@ class TemplateDefinition(db.Model, object):
     def counter(self, **kwargs):
         """Get counter of this template definition, based on given kwargs."""
         meta_template = double_counter(self.meta_template, self.COUNTER_REGEX)
-        counter = Counter.get(meta_template, kwargs)
+        counter = Counter.get(self.name, meta_template, kwargs)
         if counter is None:
             with db.session.begin_nested():
                 counter = Counter.create(
@@ -121,8 +129,10 @@ class Counter(db.Model):
     """The template string to use."""
 
     definition_name = db.Column(
-        db.ForeignKey(TemplateDefinition.name,
-                      name='fk_seqgen_counter_definition_name_seqgen_template')
+        db.ForeignKey(
+            TemplateDefinition.name,
+            name='fk_seqgen_counter_definition_name_seqgen_template'),
+        primary_key=True,
     )
     """Link to the template definition."""
 
@@ -151,9 +161,9 @@ class Counter(db.Model):
         )
 
     @classmethod
-    def get(cls, definition, ctx=None):
+    def get(cls, name, definition, ctx=None):
         """Get a ``Counter``."""
-        return cls.query.get(definition.format(**ctx or {}))
+        return cls.query.get((definition.format(**ctx or {}), name))
 
     def increment(self):
         """Generate next identifier."""

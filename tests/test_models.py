@@ -2,6 +2,9 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016 CERN.
+# Copyright (C) 2017 Swiss Data Science Center (SDSC)
+# A partnership between École Polytechnique Fédérale de Lausanne (EPFL) and
+# Eidgenössische Technische Hochschule Zürich (ETHZ).
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -104,6 +107,20 @@ def test_get(db):
     assert Sequence('B')
     assert Sequence('B').next() == 'B-0'
     assert Sequence('B').next() == 'B-1'
+
+
+def test_counters(db):
+    """Test same counters."""
+    Template.create('A', '{counter}')
+    Template.create('B', '{counter}')
+
+    assert Sequence('A')
+    assert Sequence('A').next() == '0'
+    assert Sequence('A').next() == '1'
+
+    assert Sequence('B')
+    assert Sequence('B').next() == '0'
+    assert Sequence('B').next() == '1'
 
 
 def test_reset(db):

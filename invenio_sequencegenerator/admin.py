@@ -2,6 +2,9 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016, 2017 CERN.
+# Copyright (C) 2017 Swiss Data Science Center (SDSC)
+# A partnership between École Polytechnique Fédérale de Lausanne (EPFL) and
+# Eidgenössische Technische Hochschule Zürich (ETHZ).
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -60,8 +63,10 @@ class CounterView(ModelView):
     def reset_view(self):
         """Reset selected counter."""
         start = request.form.get('start', default=0, type=int)
-        template_instance = request.form['rowid']
-        Counter.query.get(template_instance).reset(start=start)
+        template_instance = request.form['template_instance']
+        definition_name = request.form['definition_name']
+        Counter.query.get((template_instance, definition_name)).reset(
+            start=start)
         db.session.commit()
         return redirect(url_for('.index_view'))
 

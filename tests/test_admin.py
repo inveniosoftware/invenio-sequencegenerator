@@ -2,6 +2,9 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016 CERN.
+# Copyright (C) 2017 Swiss Data Science Center (SDSC)
+# A partnership between École Polytechnique Fédérale de Lausanne (EPFL) and
+# Eidgenössische Technische Hochschule Zürich (ETHZ).
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -63,9 +66,11 @@ def test_admin(app, db):
             request_url = url_for('counter.reset_view')
         with app.test_client() as client:
             # Reset counter
-            client.post(request_url,
-                        data={'start': 0, 'rowid': 'File {counter}'},
-                        follow_redirects=False)
+            client.post(request_url, data={
+                'start': 0,
+                'template_instance': 'File {counter}',
+                'definition_name': 'ID',
+            }, follow_redirects=False)
 
         # Assert that reset was successful
         assert seq.next() == 'File 0'

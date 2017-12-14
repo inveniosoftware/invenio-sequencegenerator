@@ -2,6 +2,9 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2016 CERN.
+# Copyright (C) 2017 Swiss Data Science Center (SDSC)
+# A partnership between École Polytechnique Fédérale de Lausanne (EPFL) and
+# Eidgenössische Technische Hochschule Zürich (ETHZ).
 #
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
@@ -27,7 +30,8 @@
   {{ super() }}
   <form class="icon" method="POST" action="{{ url_for('.reset_view') }}">
     <input name="start" value="0" type="number" size="1">
-    <input name="rowid" value="{{ get_pk_value(row) }}" type="hidden">
+    <input name="template_instance" value="{{ row.template_instance }}" type="hidden">
+    <input name="definition_name" value="{{ row.definition_name }}" type="hidden">
     <button onclick="return confirm(_('Are you sure you want to reset selected counter?'));" title="{{ _('Reset') }}">
       <span class="fa fa-step-backward glyphicon glyphicon-step-backward"></span>
     </button>
