@@ -11,7 +11,7 @@
 
 from __future__ import absolute_import, print_function
 
-from flask import url_for
+from flask import current_app, url_for
 from flask_admin import Admin
 
 from invenio_sequencegenerator.admin import counter_adminview as ca
@@ -19,7 +19,7 @@ from invenio_sequencegenerator.admin import templatedefinition_adminview as ta
 from invenio_sequencegenerator.api import Sequence, Template
 
 
-def test_admin(app, db):
+def test_admin(db):
     """Test admin interface."""
     assert isinstance(ca, dict)
     assert isinstance(ta, dict)
@@ -30,27 +30,26 @@ def test_admin(app, db):
     assert 'modelview' in ta
 
     # Create admin
-    admin = Admin(app, name='Example: Sequence Generator')
+    admin = Admin(current_app, name='Example: Sequence Generator')
 
     # Add views
     admin.add_view(ta['modelview'](ta['model'], db.session))
     admin.add_view(ca['modelview'](ca['model'], db.session))
 
-    with app.app_context():
-        # Create test data
-        seq = Sequence(Template.create('ID', 'File {counter}'))
-        assert seq.next() == 'File 0'
-        assert seq.next() == 'File 1'
-        assert seq.next() == 'File 2'
-        db.session.commit()
+    # Create test data
+    seq = Sequence(Template.create('ID', 'File {counter}'))
+    assert seq.next() == 'File 0'
+    assert seq.next() == 'File 1'
+    assert seq.next() == 'File 2'
+    db.session.commit()
 
-        with app.test_request_context():
-            request_url = url_for('counter.reset_view')
-        with app.test_client() as client:
-            # Reset counter
-            client.post(request_url,
-                        data={'start': 0, 'rowid': 'File {counter}'},
-                        follow_redirects=False)
+    with current_app.test_request_context():
+        request_url = url_for('counter.reset_view')
+    with current_app.test_client() as client:
+        # Reset counter
+        client.post(request_url,
+                    data={'start': 0, 'rowid': 'File {counter}'},
+                    follow_redirects=False)
 
-        # Assert that reset was successful
-        assert seq.next() == 'File 0'
+    # Assert that reset was successful
+    assert seq.next() == 'File 0'
