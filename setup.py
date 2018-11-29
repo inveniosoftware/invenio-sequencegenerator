@@ -22,7 +22,7 @@ tests_require = [
     'pydocstyle>=2.0.0',
     'pytest-cov>=2.5.1',
     'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0',
+    'pytest-invenio>=1.0.6',
 ]
 
 extras_require = {
@@ -56,8 +56,7 @@ setup_requires = [
 ]
 
 install_requires = [
-    'Flask>=0.11.1',
-    'Flask-BabelEx>=0.9.2',
+    'Flask-BabelEx>=0.9.3',
     'sqlalchemy-utils>=0.31',
 ]
 
@@ -66,8 +65,7 @@ packages = find_packages()
 
 # Get the version string. Cannot be done with import!
 g = {}
-with open(os.path.join('invenio_sequencegenerator', 'version.py'),
-          'rt') as fp:
+with open(os.path.join('invenio_sequencegenerator', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 

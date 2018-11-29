@@ -24,7 +24,7 @@ def assert_success(res, expected):
     assert expected in res.output
 
 
-def test_cli_authors(script_info):
+def test_cli_authors(script_info, db):
     """Test CLI for the use case of author identifiers."""
     runner = CliRunner()
     run = partial(runner.invoke, sequences, obj=script_info)
@@ -46,7 +46,7 @@ def test_cli_authors(script_info):
     assert_success(author_2(), 'Tom.Phake.5')
 
 
-def test_cli_playlists(script_info):
+def test_cli_playlists(script_info, db):
     """Test CLI for the use case of video playlist identifiers."""
     runner = CliRunner()
     run = partial(runner.invoke, sequences, obj=script_info)

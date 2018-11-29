@@ -147,10 +147,10 @@ Next, instantiate the template for specific categories:
 >>> videos.next()
 'VIDEOS: File 002'
 
->>> Sequence('invalid')
+>>> Sequence('invalid') # doctest: +IGNORE_EXCEPTION_DETAIL
 Traceback (most recent call last):
  ...
-SequenceNotFound
+invenio_sequencegenerator.errors.SequenceNotFound
 
 >>> invalid = Sequence(cat, invalid='PHOTOS')
 >>> invalid.next()
