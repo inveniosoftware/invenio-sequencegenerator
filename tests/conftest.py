@@ -11,6 +11,7 @@ from __future__ import absolute_import, print_function
 
 import pytest
 from flask import Flask
+from invenio_app.factory import create_api
 from invenio_db import InvenioDB
 
 from invenio_sequencegenerator.ext import InvenioSequenceGenerator
@@ -19,13 +20,11 @@ from invenio_sequencegenerator.ext import InvenioSequenceGenerator
 @pytest.fixture(scope='module')
 def create_app():
     """Application factory fixture."""
-    def factory(**config):
-        app = Flask('testapp')
-        app.config.update(**config)
+    return create_api
 
-        InvenioDB(app)
-        InvenioSequenceGenerator(app)
 
-        return app
-
-    return factory
+@pytest.fixture(scope='module')
+def app_config(app_config):
+    """Application configuration."""
+    app_config['SERVER_NAME'] = 'localhost'
+    return app_config

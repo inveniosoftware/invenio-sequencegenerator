@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015-2018 CERN.
+# Copyright (C) 2015-2019 CERN.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -18,11 +18,13 @@ history = open('CHANGES.rst').read()
 tests_require = [
     'check-manifest>=0.25',
     'coverage>=4.0',
+    'invenio-app>=1.0.0',
     'isort>=4.3.3',
     'pydocstyle>=2.0.0',
     'pytest-cov>=2.5.1',
-    'pytest-pep8>=1.0.6',
     'pytest-invenio>=1.0.6',
+    'pytest-pep8>=1.0.6',
+    'redis>=2.10.5',
 ]
 
 extras_require = {
@@ -57,6 +59,8 @@ setup_requires = [
 
 install_requires = [
     'Flask-BabelEx>=0.9.3',
+    'invenio-access>=1.0.0',
+    'invenio-rest>=1.0.0',
     'sqlalchemy-utils>=0.31',
 ]
 
@@ -91,6 +95,10 @@ setup(
             'invenio_sequencegenerator = '
             'invenio_sequencegenerator:InvenioSequenceGenerator',
         ],
+        'invenio_base.api_apps': [
+            'invenio_sequencegenerator = '
+            'invenio_sequencegenerator:InvenioSequenceGenerator',
+        ],
         'invenio_i18n.translations': [
             'messages = invenio_sequencegenerator',
         ],
@@ -103,6 +111,10 @@ setup(
             'invenio_sequencegenerator.admin:templatedefinition_adminview',
             'invenio_sequencegenerator_counter = '
             'invenio_sequencegenerator.admin:counter_adminview',
+        ],
+        'invenio_base.api_blueprints': [
+            'invenio_sequencegenerator = '
+            'invenio_sequencegenerator.views:blueprint',
         ],
     },
     extras_require=extras_require,
