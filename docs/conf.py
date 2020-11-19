@@ -1,30 +1,18 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015, 2016 CERN.
+# Copyright (C) 2015-2018 CERN.
 #
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+"""Sphinx configuration."""
 
 from __future__ import print_function
 
 import os
+
+import sphinx.environment
 
 # -- General configuration ------------------------------------------------
 
@@ -61,8 +49,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Invenio-SequenceGenerator'
-copyright = u'2016, CERN'
+project = u'Invenio-Sequencegenerator'
+copyright = u'2018, CERN'
 author = u'CERN'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -73,7 +61,8 @@ author = u'CERN'
 
 # Get the version string. Cannot be done with import!
 g = {}
-with open(os.path.join('..', 'invenio_sequencegenerator', 'version.py'),
+with open(os.path.join(os.path.dirname(__file__), '..',
+                       'invenio_sequencegenerator', 'version.py'),
           'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
@@ -130,7 +119,7 @@ todo_include_todos = False
 html_theme = 'alabaster'
 
 html_theme_options = {
-    'description': 'Generic minter for report numbers with auto-increment per custom prefix.',
+    'description': 'Invenio module for generating sequences.',
     'github_user': 'inveniosoftware',
     'github_repo': 'invenio-sequencegenerator',
     'github_button': False,
@@ -265,8 +254,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'invenio-sequencegenerator.tex', u'invenio-sequencegenerator Documentation',
-   u'CERN', 'manual'),
+    (master_doc, 'invenio-sequencegenerator.tex', u'invenio-sequencegenerator Documentation',
+     u'CERN', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -309,9 +298,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'invenio-sequencegenerator', u'Invenio-SequenceGnerator Documentation',
-   author, 'invenio-sequencegenerator', 'Generic minter for report numbers with auto-increment per custom prefix.',
-   'Miscellaneous'),
+    (master_doc, 'invenio-sequencegenerator', u'Invenio-Sequencegenerator Documentation',
+     author, 'invenio-sequencegenerator', 'Invenio module for generating sequences.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -328,7 +317,11 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/', None),
+    # TODO: Configure external documentation references, eg:
+    # 'Flask-Admin': ('https://flask-admin.readthedocs.io/en/latest/', None),
+}
 
 # Autodoc configuraton.
 autoclass_content = 'both'

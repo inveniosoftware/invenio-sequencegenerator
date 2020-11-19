@@ -1,28 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015, 2016 CERN.
+# Copyright (C) 2015-2018 CERN.
 #
-# Invenio is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
-
-addons:
-  postgresql: 9.3
 
 notifications:
-  email: false
+  email: # sent to the committer and the author
+    on_success: never # default: always
+    on_failure: always # default: always
 
 sudo: false
 
@@ -51,11 +39,11 @@ python:
   - "3.5"
 
 matrix:
+  fast_finish: true
   allow_failures:
-    - python: pypy
-  include:
-    - python: pypy
-      env: EXTRAS=sqlite REQUIREMENTS=release SQLALCHEMY_DATABASE_URI="sqlite:///test.db"
+    - env: REQUIREMENTS=devel EXTRAS=all,sqlite SQLALCHEMY_DATABASE_URI="sqlite:///test.db"
+    - env: REQUIREMENTS=devel EXTRAS=all,mysql SQLALCHEMY_DATABASE_URI="mysql+pymysql://travis@localhost:3306/invenio"
+    - env: REQUIREMENTS=devel EXTRAS=all,postgresql SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://postgres@localhost:5432/invenio"
 
 before_install:
   - "travis_retry pip install --upgrade pip setuptools py"
@@ -78,9 +66,9 @@ after_success:
 
 deploy:
   provider: pypi
-  user: jirikuncar
+  user: inveniosoftware
   password:
-    secure: D1VKt0fS0IczaFowldpCo2wA5ooGlRF+hZqkyGSXjKw3Q63iU+qDizU7Spf7dit3znpLU7XyOenZiju6LX801YvWOMqAt9KcIPElHXYglli8QMOXmVFIB2MLoUWM+3yjkPKxLolZMTRLOp05+D6XZqjaOE6JaOX+0EG3vzsu5cO9ONY1908U6LPWKAU15fetRPuykuRFrWE9DB8IwCcIB0o6ijJBf/GaVr70eR049ib7GVa6O6+3Bm+YdhPTv1DdQQV6ReWjaV8QbhHjxiw1ZWu7+VGlsKQfRkW5bf5k9q1rXL+aDDhrVmw1blWMpPG3dY/Z/SPjs9KSJKNQmPtKO0UmZcT+7ZujHmBL3f7ZBteGmRiDd/fzEleCaM9gBmhkRjHM7V2nnfcU2MUE5UOZobj5uRF6S+zCB++D+3L2cRo/T9b+/dynHliMCoTlqlagm3O42wVEqgxFm2nZdF1d8cG8+ks1WfYXKHdjooorzoUw+3DmHLx2LZPIX8WHfLjlvuTufPccyTc6zgZw7O/g/ggSC4T7hBflOOD08gqTPfccoI7W1dlmseqKt74WGu0GxLO4L2h/NLWGQ7nPFCdYLABZrrJAnqGDkoPmijBgn5bDN0r+oq4azbjsgmCoB8GvWM0LKkLArSvrkypTZUaHMvLq4QjXoMaQhmV+CutQw9I=
+    secure: "Ma5dpnA4SVwcNBFFni1aHrJCm2sRhCi5cADRHUKGhZLgA5vQeZOajTIpWjNlc85lRNLNELR3ltt6YfomJkQ0oGGYCITAB3f4FmqVf3X6nC7GUPScCP77ZyrfXV+95rlo5NULxSUkLlFbjsdaHG4NpqQdtLfzu8cSk3JbdrztCzo0rquSJo2QbxdgVauV5qKdWVStl9/9JWOx8kGO77j133Q7ZoetXSEnhSoyobhUZv0Y1Z0Xh8/7OEUod15UoxQzWn5Jc44+UpOo8+I6Mjpf2a2f1AbdJ3FAJyet4qy7kJXJnas5IcKoRBJSp8qGF34QPV9KHwdfzDWlPAsVRz3CGxfUimmurlAysINzX3w/WfaV01+s1NzEPcSILFI256Kvtef1yzLPrdP/OEfP6Q+cOq0DzeHgWbQVJB+QgeYXe6FlNMqUV6dmilOEsiV+T2X76XYQPalxPLpDQbiVZG58OTEK+tsXeWnWVBlMApvO5Y7dP49ZJGmggy7wIi6kQhW7E5n9K6vaABOhJHnQfrFY80eJGYVn8FDBCXTAnLed2NvxFnzAlqyWfdX79q2IR5o2FnMa46ot9oZVDSTbZa6LNcnamUpYjPLCV5TcXH4e5jtQvVPhbqGPBDZC22qg/A2GCZDTANN3PtNvq8x6aTanAZK2cJ77dEFtsEBsmT/F3L4="
   distributions: "compile_catalog sdist bdist_wheel"
   on:
     tags: true

@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2017 CERN.
+# Copyright (C) 2017-2018 CERN.
 #
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 
 """Test command-line interface."""
@@ -30,6 +14,7 @@ from __future__ import absolute_import, print_function
 from functools import partial
 
 from click.testing import CliRunner
+
 from invenio_sequencegenerator.cli import sequences
 
 
@@ -39,7 +24,7 @@ def assert_success(res, expected):
     assert expected in res.output
 
 
-def test_cli_authors(script_info):
+def test_cli_authors(script_info, db):
     """Test CLI for the use case of author identifiers."""
     runner = CliRunner()
     run = partial(runner.invoke, sequences, obj=script_info)
@@ -61,7 +46,7 @@ def test_cli_authors(script_info):
     assert_success(author_2(), 'Tom.Phake.5')
 
 
-def test_cli_playlists(script_info):
+def test_cli_playlists(script_info, db):
     """Test CLI for the use case of video playlist identifiers."""
     runner = CliRunner()
     run = partial(runner.invoke, sequences, obj=script_info)
