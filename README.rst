@@ -10,8 +10,8 @@
  Invenio-SequenceGenerator
 ===========================
 
-.. image:: https://img.shields.io/travis/inveniosoftware/invenio-sequencegenerator.svg
-        :target: https://travis-ci.org/inveniosoftware/invenio-sequencegenerator
+.. image:: https://github.com/inveniosoftware/invenio-sequencegenerator/workflows/CI/badge.svg
+        :target: https://github.com/inveniosoftware/invenio-sequencegenerator/actions?query=workflow%3ACI
 
 .. image:: https://img.shields.io/coveralls/inveniosoftware/invenio-sequencegenerator.svg
         :target: https://coveralls.io/r/inveniosoftware/invenio-sequencegenerator
