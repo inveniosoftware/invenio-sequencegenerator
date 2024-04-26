@@ -11,7 +11,7 @@
 from flask import redirect, request, url_for
 from flask_admin import expose
 from flask_admin.contrib.sqla import ModelView
-from flask_babelex import gettext as _
+from flask_babel import gettext as _
 from invenio_db import db
 
 from .models import Counter, TemplateDefinition
@@ -21,45 +21,45 @@ class TemplateDefinitionView(ModelView):
     """Flask-Admin view for template definitions."""
 
     column_list = (
-        'name',
-        'meta_template',
-        'parent_name',
-        'start',
-        'step',
+        "name",
+        "meta_template",
+        "parent_name",
+        "start",
+        "step",
     )
 
 
 class CounterView(ModelView):
     """Admin view for counters."""
 
-    list_template = 'invenio_sequencegenerator/custom_list.html'
+    list_template = "invenio_sequencegenerator/custom_list.html"
 
     column_list = (
-        'template_instance',
-        'counter',
-        'definition_name',
+        "template_instance",
+        "counter",
+        "definition_name",
     )
 
-    @expose('/reset', methods=('POST',))
+    @expose("/reset", methods=("POST",))
     def reset_view(self):
         """Reset selected counter."""
-        start = request.form.get('start', default=0, type=int)
-        template_instance = request.form['rowid']
+        start = request.form.get("start", default=0, type=int)
+        template_instance = request.form["rowid"]
         Counter.query.get(template_instance).reset(start=start)
         db.session.commit()
-        return redirect(url_for('.index_view'))
+        return redirect(url_for(".index_view"))
 
 
 templatedefinition_adminview = {
-    'model': TemplateDefinition,
-    'modelview': TemplateDefinitionView,
-    'category': _('Sequences'),
+    "model": TemplateDefinition,
+    "modelview": TemplateDefinitionView,
+    "category": _("Sequences"),
 }
 
 counter_adminview = {
-    'model': Counter,
-    'modelview': CounterView,
-    'category': _('Sequences'),
+    "model": Counter,
+    "modelview": CounterView,
+    "category": _("Sequences"),
 }
 
-__all__ = ('templatedefinition_adminview', 'counter_adminview')
+__all__ = ("templatedefinition_adminview", "counter_adminview")
