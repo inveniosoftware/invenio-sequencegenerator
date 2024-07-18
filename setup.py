@@ -47,7 +47,13 @@ setup_requires = [
     "pytest-runner>=3.0.0,<5",
 ]
 
-install_requires = ["Babel>=2.8", "Flask-Babel>=3.0.0", "sqlalchemy-utils>=0.31"]
+install_requires = [
+    "sqlalchemy-utils>=0.31",
+    "invenio-admin>=1.0.0",
+    "invenio-base>=1.2.0",
+    "invenio-db>1.0.0",
+    "invenio-i18n>=2.0.0",
+]
 
 packages = find_packages()
 
