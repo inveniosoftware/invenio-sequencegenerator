@@ -51,7 +51,7 @@ install_requires = [
     "sqlalchemy-utils>=0.31",
     "invenio-admin>=1.0.0",
     "invenio-base>=1.2.0",
-    "invenio-db>1.0.0",
+    "invenio-db>=1.0.0",
     "invenio-i18n>=2.0.0",
 ]
 
