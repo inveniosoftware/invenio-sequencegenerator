@@ -11,7 +11,7 @@
 from flask import redirect, request, url_for
 from flask_admin import expose
 from flask_admin.contrib.sqla import ModelView
-from flask_babel import gettext as _
+from invenio_i18n import gettext as _
 from invenio_db import db
 
 from .models import Counter, TemplateDefinition
